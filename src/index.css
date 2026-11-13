@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   视觉主题：白底火焰线稿风（v2，替代冷科技暗色风）
+   - 纯白背景，禁止黑色背景
+   - 纤细红色线条组成火焰形态纹样，仅作底层氛围（低透明度、缓慢摇曳）
+   - 信息突出、低冗余、全部圆角结构
+   - 主强调色为红色（火焰主按钮），金额颜色仍按「收入红 / 支出绿」
+   - 外层一圈细红渐变边框由 Layout 渲染
+   ============================================================ */
+
+body {
+  margin: 0;
+  background: #ffffff; /* 纯白底 */
+  color: #1f2937;
+  font-family:
+    system-ui,
+    -apple-system,
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 白底卡片：全部圆角结构，细描边 + 极轻阴影 */
+.card {
+  border-radius: 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.07);
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
+}
+
+/* 火焰主按钮：红色渐变，全应用唯一的强调色载体 */
+.btn-fire {
+  background: linear-gradient(135deg, #f43f5e, #e11d48 55%, #dc2626);
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.28);
+}
+
+/* 火焰线条摇曳：极缓慢的透明度/位移呼吸（仅氛围，不抢信息） */
+@keyframes flame-sway {
+  0% {
+    opacity: 0.75;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
+.flame-sway {
+  animation: flame-sway 9s ease-in-out infinite alternate;
+}
+
+.flame-sway-slow {
+  animation: flame-sway 14s ease-in-out infinite alternate-reverse;
+}
+
+/* 外层渐变边框（mask 挖空中间，只留 1.5px 环）：红色系细环 */
+.app-frame {
+  background: linear-gradient(
+    180deg,
+    rgba(244, 63, 94, 0.5),
+    rgba(251, 146, 60, 0.28) 32%,
+    rgba(225, 29, 72, 0.34) 70%,
+    rgba(244, 63, 94, 0.45)
+  );
+  padding: 1.5px;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
